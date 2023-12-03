@@ -1,1 +1,22 @@
-/target
+# Arquivos de compilação
+/target/
+
+# Arquivos gerados pela compilação
+Cargo.lock
+**/*.rs.bk
+
+# Diretório de dependências gerado pelo Cargo
+**/target/
+
+# Arquivos de IDE ou editor específicos (exemplos para VS Code e IntelliJ)
+.vscode/
+.idea/
+
+# Arquivos gerados pelo sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de cache ou temporários
+*.log
+*.swp
+*.tmp
