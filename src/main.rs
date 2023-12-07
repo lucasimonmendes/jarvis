@@ -65,7 +65,7 @@ fn main() {
 
             // Solicita ao usuário o projeto para abrir no LunarVim
             let project: String = Input::new()
-                .with_prompt("Digite o caminho do projeto para abrir no LunarVim")
+                .with_prompt("Digite o caminho do projeto para abrir no terminal")
                 .interact()
                 .unwrap();
 
@@ -76,7 +76,7 @@ fn main() {
         1 => {
             // Solicita ao usuário o projeto para abrir no LunarVim
             let project: String = Input::new()
-                .with_prompt("Digite o caminho do projeto para abrir no LunarVim")
+                .with_prompt("Digite o caminho do projeto para abrir no terminal")
                 .interact()
                 .unwrap();
 
