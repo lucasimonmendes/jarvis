@@ -1,19 +1,14 @@
 use dialoguer::Select;
 use std::io::Write;
-
 use crossterm::{
     execute,
     style::{Color, Print, ResetColor, SetForegroundColor},
 };
 
 
-mod opener;
-mod todolist;
-
-
-fn main() {
-
-    // Inicializa o Terminal com Crossterm
+pub fn todolist() {
+   
+            // Inicializa o Terminal com Crossterm
         let mut stdout = std::io::stdout();
         execute!(
             stdout,
@@ -27,11 +22,13 @@ fn main() {
         stdout.flush().unwrap(); // Limpa o buffer e exibe o texto no terminal
     
 
-    println!("Olá, sou Jarvis seu assistente pessoal, o que deseja?");
+    println!("Bem-vindo ao Gerenciador de tarefas!\nO que você deseja?");
 
     let menu = Select::new()
-        .item("Iniciar espaço de trabalho")
-        .item("Gerenciar Tarefas")
+        .item("Abrir Listas")
+        .item("Adicionar Lista")
+        .item("Adicionar Tarefa")
+        .item("Remover Lista")
         .item("Sair")
         .default(0)
         .interact()
@@ -41,26 +38,38 @@ fn main() {
     match menu {
         
         0 => {
-            opener::opener();
+            // show_lists();
+            println!("Abrindo listas...");
+
+            std::process::exit(0);
         },
 
         1 => {
-            // println!("Abrindo gerenciador de projetos");
+            // add_list();
+            println!("Adicionando lista...");
 
-            todolist::todolist();
-
-             
-
+            std::process::exit(0);
         },
 
         2 => {
-            println!("Saindo...");
+            // add_task();
+            println!("Adicionando tarefa...");
+
             std::process::exit(0);
-        },   
+        },
+        3 => {
+            // remove_list();
+            println!("Removendo lista...");
+
+            std::process::exit(0);
+        },
+        4 => {
+            println!("Saindo...");
+
+            std::process::exit(0);
+        },
         _ => println!("Escolha inválida"),
     
     }
+
 }
-
-
-
