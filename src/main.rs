@@ -9,7 +9,7 @@ use crossterm::{
 
 mod opener;
 mod todolist;
-
+mod repos;
 
 fn main() {
 
@@ -32,6 +32,7 @@ fn main() {
     let menu = Select::new()
         .item("Iniciar espaço de trabalho")
         .item("Gerenciar Tarefas")
+        .item("Download Projetos")
         .item("Sair")
         .default(0)
         .interact()
@@ -52,8 +53,13 @@ fn main() {
              
 
         },
-
         2 => {
+
+            repos::repos();
+
+        },
+
+        3 => {
             println!("Saindo...");
             std::process::exit(0);
         },   
