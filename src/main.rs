@@ -7,18 +7,22 @@ use crossterm::{
 };
 
 
+const WELCOME_TEXT: &str = include_str!("../assets/welcome");
+
 mod opener;
 mod todolist;
 mod repos;
 
 fn main() {
 
+    println!("{}", WELCOME_TEXT);
+
     // Inicializa o Terminal com Crossterm
         let mut stdout = std::io::stdout();
         execute!(
             stdout,
             SetForegroundColor(Color::Yellow),  // Define a cor do texto
-            Print("----- Jarvis -----"), // Imprime Jarvis
+            Print("----- Home -----"),       // Imprime Jarvis
             Print("\n"),
             ResetColor                // Restaura a cor padrão do Terminal
         )
@@ -40,31 +44,20 @@ fn main() {
 
 
     match menu {
-        
         0 => {
             opener::opener();
         },
-
         1 => {
-            // println!("Abrindo gerenciador de projetos");
-
             todolist::todolist();
-
-             
-
         },
         2 => {
-
             repos::repos();
-
         },
-
         3 => {
             println!("Saindo...");
             std::process::exit(0);
         },   
         _ => println!("Escolha inválida"),
-    
     }
 }
 
