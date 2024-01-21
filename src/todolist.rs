@@ -157,7 +157,7 @@ pub fn todolist() {
         execute!(
             stdout,
             SetForegroundColor(Color::Yellow),  // Define a cor do texto
-            Print("----- Jarvis -----"), // Imprime Jarvis
+            Print("----- Gerenciador de Tarefas -----"), // Imprime Jarvis
             Print("\n"),
             ResetColor                // Restaura a cor padrão do Terminal
         )

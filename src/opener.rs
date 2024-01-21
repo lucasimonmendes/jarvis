@@ -35,7 +35,7 @@ pub fn opener() {
         execute!(
             stdout,
             SetForegroundColor(Color::Yellow),  // Define a cor do texto
-            Print("----- Jarvis -----"), // Imprime Jarvis
+            Print("----- Inicializador -----"), // Imprime Jarvis
             Print("\n"),
             ResetColor                // Restaura a cor padrão do Terminal
         )
