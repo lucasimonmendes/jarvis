@@ -32,7 +32,7 @@ pub fn repos() {
     execute!(
         stdout, 
         SetForegroundColor(Color::Blue), 
-        Print("----- Jarvis -----"), 
+        Print("----- Repos -----"), 
         Print("\n"), 
         ResetColor
     ).unwrap();
