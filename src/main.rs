@@ -1,10 +1,4 @@
 use dialoguer::Select;
-use std::io::Write;
-
-use crossterm::{
-    execute,
-    style::{Color, Print, ResetColor, SetForegroundColor},
-};
 
 
 const WELCOME_TEXT: &str = include_str!("../assets/welcome");
@@ -12,32 +6,23 @@ const WELCOME_TEXT: &str = include_str!("../assets/welcome");
 mod opener;
 mod todolist;
 mod repos;
+mod ui;
 
 fn main() {
 
     println!("{}", WELCOME_TEXT);
 
-    // Inicializa o Terminal com Crossterm
-        let mut stdout = std::io::stdout();
-        execute!(
-            stdout,
-            SetForegroundColor(Color::Yellow),  // Define a cor do texto
-            Print("----- Home -----"),       // Imprime Jarvis
-            Print("\n"),
-            ResetColor                // Restaura a cor padrão do Terminal
-        )
-        .unwrap();
+    let title = "---- Home -----";
+    let phrase = "Hi, I'm Jarvis, your personal assistant, what do you want?";
 
-        stdout.flush().unwrap(); // Limpa o buffer e exibe o texto no terminal
-    
+    ui::print_header(&title, &phrase);
 
-    println!("Olá, sou Jarvis seu assistente pessoal, o que deseja?");
 
     let menu = Select::new()
-        .item("Iniciar espaço de trabalho")
-        .item("Gerenciar Tarefas")
-        .item("Download Projetos")
-        .item("Sair")
+        .item("Start Workspace")
+        .item("Manage Tasks")
+        .item("Download Projects")
+        .item("Exit")
         .default(0)
         .interact()
         .unwrap();
@@ -54,10 +39,10 @@ fn main() {
             repos::repos();
         },
         3 => {
-            println!("Saindo...");
+            println!("Leaving...");
             std::process::exit(0);
         },   
-        _ => println!("Escolha inválida"),
+        _ => println!("Invalid Choice"),
     }
 }
 
