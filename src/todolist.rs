@@ -2,12 +2,9 @@ use std::io::{self, Write, BufReader, BufRead};
 use std::fs::{File, OpenOptions};
 use std::fmt;
 
-use dialoguer::Select;
+use crate::ui::print_header;
 
-use crossterm::{
-    execute,
-    style::{Color, Print, ResetColor, SetForegroundColor},
-};
+use dialoguer::Select;
 
 use serde_json;
 use serde::{Serialize, Deserialize};
@@ -71,11 +68,11 @@ fn write_tasks_to_file(tasks: &Vec<Task>) {
 
 
 fn add_task(tasks: &mut Vec<Task>) {
-    println!("Digite a tarefa: ");
+    println!("Enter the task: ");
     io::stdout().flush().expect("Failed to flush stdout");
 
     let mut description = String::new();
-    io::stdin().read_line(&mut description).expect("Falha ao ler a linha");
+    io::stdin().read_line(&mut description).expect("Failed to read line");
 
     let id = tasks.len() + 1;
     let new_task = Task::new(id, description.trim().to_string());
@@ -85,9 +82,9 @@ fn add_task(tasks: &mut Vec<Task>) {
 }
 
 fn list_tasks(tasks: &Vec<Task>) {
-    println!("Lista de tarefas:");
+    println!("To-do list:");
     for task in tasks {
-        let status = if task.completed { "Completada" } else { "Pendente" };
+        let status = if task.completed { "Completed" } else { "Pending" };
         println!("{}. [{}] {}", task.id, status, task.description);
     }
 }
@@ -126,7 +123,7 @@ fn update_task_in_file(task: &Task) {
 fn complete_task(tasks: &mut Vec<Task>) {
     list_tasks(&tasks);
 
-    println!("Digite o ID da tarefa para marcar como completa: ");
+    println!("Enter the task ID to mark as complete: ");
     io::stdout().flush().expect("Failed to flush stdout");
 
     let mut input = String::new();
@@ -136,12 +133,12 @@ fn complete_task(tasks: &mut Vec<Task>) {
         if let Some(task) = tasks.iter_mut().find(|t| t.id == id) {
             task.completed = true;
             update_task_in_file(&task);
-            println!("Tarefa marcada como concluída");
+            println!("Task marked as completed!");
         } else {
-            println!("Tarefa não encontrada.");
+            println!("Task not found0.");
         }
     } else {
-        println!("Entrada inválida. Por favor, digite um ID válido.");
+        println!("Invalid input. Please enter a valid ID.");
     }
 }
 
@@ -152,26 +149,16 @@ pub fn todolist() {
    
     let mut tasks = read_tasks_from_file();
 
-            // Inicializa o Terminal com Crossterm
-        let mut stdout = std::io::stdout();
-        execute!(
-            stdout,
-            SetForegroundColor(Color::Yellow),  // Define a cor do texto
-            Print("----- Gerenciador de Tarefas -----"), // Imprime Jarvis
-            Print("\n"),
-            ResetColor                // Restaura a cor padrão do Terminal
-        )
-        .unwrap();
+    let title = "---- Task Manager ----";
+    let phrase = "Welcome to the Task Manager\nWhat do you want?";
 
-        stdout.flush().unwrap(); // Limpa o buffer e exibe o texto no terminal
-
-    println!("Bem-vindo ao Gerenciador de tarefas!\nO que você deseja?");
+    print_header(&title, &phrase); 
 
     let menu = Select::new()
-        .item("Abrir Lista")
-        .item("Adicionar Tarefa")
-        .item("Concluir Tarefa")
-        .item("Sair")
+        .item("Open List")
+        .item("Add Task")
+        .item("Complete Task")
+        .item("Exit")
         .default(0)
         .interact()
         .unwrap();
@@ -180,7 +167,7 @@ pub fn todolist() {
     match menu {
         
         0 => {
-            println!("Abrindo lista...");
+            println!("Opening list...");
             list_tasks(&tasks);
         },
 
@@ -192,11 +179,11 @@ pub fn todolist() {
             complete_task(&mut tasks);
        },
         3 => {
-            println!("Saindo...");
+            println!("Leaving...");
 
             std::process::exit(0);
         },
-        _ => println!("Escolha inválida"),
+        _ => println!("Invalid Choice"),
     
     }
 

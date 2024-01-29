@@ -1,25 +1,19 @@
 use dialoguer::Select;
+use crate::ui::print_header;
 
-use std::io::Write;
 use std::process::Command;
-
-use crossterm::{
-    execute,
-    style::{Color, Print, ResetColor, SetForegroundColor},
-};
-
 
 fn download_repo(repo: &str) {
     let output = Command::new("git")
         .arg("clone")
         .arg(repo)
         .output()
-        .expect("Falha ao executar o comando git clone");
+        .expect("Failed to run 'git clone' command");
 
     if output.status.success() {
-        println!("Repositório baixado com sucesso: {}", repo);
+        println!("Repository downloaded successfully: {}", repo);
     } else {
-        println!("Erro ao baixar o repositório {}: {}", repo, String::from_utf8_lossy(&output.stderr));
+        println!("Error downloading repository {}: {}", repo, String::from_utf8_lossy(&output.stderr));
     }
 }
 
@@ -27,26 +21,17 @@ fn download_repo(repo: &str) {
 
 pub fn repos() {
 
-    // Inicializa o Terminal com Crossterm
-    let mut stdout = std::io::stdout();
-    execute!(
-        stdout, 
-        SetForegroundColor(Color::Blue), 
-        Print("----- Repos -----"), 
-        Print("\n"), 
-        ResetColor
-    ).unwrap();
+    let title = "----- Repos Downloader -----";
+    let phrase = "Welcome to Repos Downloader, what do you want to download?";
 
-    stdout.flush().unwrap();
-
-    println!("Bem vindo ao downloader de Projetos, o que deseja baixar?");
+    print_header(&title, &phrase);
 
 
     let menu = Select::new()
         .item("Livros")
         .item("melhorqnada")
-        .item("Avulsos")
-        .item("Sair")
+        .item("Separates")
+        .item("Exit")
         .default(0)
         .interact()
         .unwrap();
@@ -56,7 +41,7 @@ pub fn repos() {
             let books_menu = Select::new()
                 .item("FS-41")
                 .item("Cicatrizes Poéticas")
-                .item("Sair")
+                .item("Exit")
                 .default(0)
                 .interact()
                 .unwrap();
@@ -72,24 +57,24 @@ pub fn repos() {
                 1 => {
                     let repo = "git@github.com:lucasimonmendes/cicatrizes-poeticas.git";
 
-                    println!("Baixando Cicatrizes Poéticas");
+                    println!("Downloading Cicatrizes Poéticas");
 
                     download_repo(repo);
 
                 },
                 2 => {
-                    println!("Saindo...");
+                    println!("Leaving...");
 
                     std::process::exit(0);
 
                 },
                 _ => {
-                    println!("Opção inválida");
+                    println!("Invalid Choice");
                 }
             }
         },
         1 => {
-            println!("Baixando mqn-cli");
+            println!("Downloading mqn-cli");
 
             let repo = "git@github.com:lucasimonmendes/mqn-cli.git";
 
@@ -112,7 +97,7 @@ pub fn repos() {
                 0 => {
                     let repo = "git@github.com:lucasimonmendes/blog.git";
 
-                    println!("Baixando Blog LSM...");
+                    println!("Downloading Blog LSM...");
 
                     download_repo(repo);
 
@@ -120,7 +105,7 @@ pub fn repos() {
                 1 => {
                     let repo = "git@github.com:lucasimonmendes/alfred.git";
 
-                    println!("Baixando Alfred CLI...");
+                    println!("Downloading Alfred CLI...");
 
                     download_repo(repo);
 
@@ -129,42 +114,42 @@ pub fn repos() {
                 2 => {
                     let repo = "git@github.com:lucasimonmendes/emomnichannel.git";
 
-                    println!("Baixando EMOmnichannel...");
+                    println!("Downloading EMOmnichannel...");
 
                     download_repo(repo);
                 },
                 3 => {
                     let repo = "git@github.com:lucasimonmendes/installer-bros.git";
 
-                    println!("Baixando Installer Bros...");
+                    println!("Downloading Installer Bros...");
 
                     download_repo(repo);
                 },
                 4 => {
                     let repo = "git@github.com:lucasimonmendes/teamtrekker.git";
 
-                    println!("Baixando Teamtrekker...");
+                    println!("Downloading Teamtrekker...");
 
                     download_repo(repo);
                 },
                 5 => {
-                    println!("Saindo...");
+                    println!("Leaving...");
 
                     std::process::exit(0);
                 },
                 _ => {
-                    println!("Opção inválida");
+                    println!("Invalid Choice");
                 },
             }
         },
         3 => {
-            println!("Saindo...");
+            println!("Leaving...");
 
             std::process::exit(0);
 
         },
         _ => {
-            println!("Opção Inválida");
+            println!("Invalid Choice");
         },
     }
 }

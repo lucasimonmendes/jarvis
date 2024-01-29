@@ -1,56 +1,40 @@
 
 use dialoguer::{Input, Select};
 use std::process::Command;
-use std::io::Write;
+use crate::ui::print_header;
 
-use crossterm::{
-    execute,
-    style::{Color, Print, ResetColor, SetForegroundColor},
-};
 
 
 fn open_chrome(site: &str) {
-    // Comando pra abrir o Chrome no site desejado
     Command::new("google-chrome")
     .arg("--new-window")
     .arg("--app")
     .arg(site)
     .output()
-    .expect("Falha ao abrir o Chrome");
+    .expect("Failed to open Chrome");
 }
 
 fn open_project(project: &String) {
-    // Comando para abrir o projeto desejado em uma nova janela no terminal
     Command::new("gnome-terminal")
         .args(&["--window", &format!("--working-directory={}",  &project)])
         .output()
-        .expect("Falha ao abrir o Projeto");
+        .expect("Failed to open the project");
 }
 
 
 pub fn opener() {
 
-        // Inicializa o Terminal com Crossterm
-        let mut stdout = std::io::stdout();
-        execute!(
-            stdout,
-            SetForegroundColor(Color::Yellow),  // Define a cor do texto
-            Print("----- Inicializador -----"), // Imprime Jarvis
-            Print("\n"),
-            ResetColor                // Restaura a cor padrão do Terminal
-        )
-        .unwrap();
+    let title = "---- Workspace Starter ----";
+    let phrase = "Welcome to your workspace!\nWhat task do you want me to perform?";
 
-        stdout.flush().unwrap(); // Limpa o buffer e exibe o texto no terminal
-    
+    print_header(&title, &phrase);
 
-    println!("Bem-vindo ao trabalho!\nQual tarefa você quer que eu execute?");
 
     let menu = Select::new()
-        .item("Abrir Chrome + Projeto")
-        .item("Abrir Projeto")
-        .item("Abrir Chrome")
-        .item("Sair")
+        .item("Open Chrome + Project")
+        .item("Open Project")
+        .item("Open Chrome")
+        .item("Exit")
         .default(0)
         .interact()
         .unwrap();
@@ -59,15 +43,13 @@ pub fn opener() {
     match menu {
         
         0 => {
-            // Solicita ao usuário o site para abrir o Chrome
             let site: String = Input::new()
-                .with_prompt("Digite o site para abrir no Chrome")
+                .with_prompt("Enter the website to open in Chrome")
                 .interact()
                 .unwrap();
 
-            // Solicita ao usuário o projeto para abrir no LunarVim
             let project: String = Input::new()
-                .with_prompt("Digite o caminho do projeto para abrir no terminal")
+                .with_prompt("Enter the project path to open in the terminal")
                 .interact()
                 .unwrap();
 
@@ -76,9 +58,8 @@ pub fn opener() {
         },
 
         1 => {
-            // Solicita ao usuário o projeto para abrir no LunarVim
             let project: String = Input::new()
-                .with_prompt("Digite o caminho do projeto para abrir no terminal")
+                .with_prompt("Enter the project path to open in the terminal")
                 .interact()
                 .unwrap();
 
@@ -86,20 +67,19 @@ pub fn opener() {
         },
 
         2 => {
-            // Solicita ao usuário o site para abrir o Chrome
             let site: String = Input::new()
-                .with_prompt("Digite o site para abrir no Chrome")
+                .with_prompt("Enter the website to open in Chrome")
                 .interact()
                 .unwrap();
 
             open_chrome(&site);
         },
         3 => {
-            println!("Saindo...");
+            println!("Leaving...");
 
             std::process::exit(0);
         },
-        _ => println!("Escolha inválida"),
+        _ => println!("Invalid choice"),
     
     }
 }
