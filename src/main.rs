@@ -1,15 +1,13 @@
-use dialoguer::Select;
-
+use std::collections::BTreeMap;
 
 const WELCOME_TEXT: &str = include_str!("../assets/welcome");
 
 mod opener;
-mod todolist;
 mod repos;
+mod todolist;
 mod ui;
 
 fn main() {
-
     println!("{}", WELCOME_TEXT);
 
     let title = "---- Home -----";
@@ -17,34 +15,47 @@ fn main() {
 
     ui::print_header(&title, &phrase);
 
-
-    let menu = Select::new()
-        .item("Start Workspace")
-        .item("Manage Tasks")
-        .item("Download Projects")
-        .item("Exit")
-        .default(0)
-        .interact()
-        .unwrap();
-
-
-    match menu {
-        0 => {
-            opener::opener();
+    let mut main_menu: ui::Menu = BTreeMap::new();
+    main_menu.insert(
+        "1",
+        ui::MenuItem {
+            label: "Start Workspace",
+            action: ui::MenuAction::Execute(execute_opener),
         },
-        1 => {
-            todolist::todolist();
+    );
+    main_menu.insert(
+        "2",
+        ui::MenuItem {
+            label: "Manage Tasks",
+            action: ui::MenuAction::Execute(execute_todolist),
         },
-        2 => {
-            repos::repos();
+    );
+    main_menu.insert(
+        "3",
+        ui::MenuItem {
+            label: "Download Projects",
+            action: ui::MenuAction::Execute(execute_repos),
         },
-        3 => {
-            println!("Leaving...");
-            std::process::exit(0);
-        },   
-        _ => println!("Invalid Choice"),
-    }
+    );
+    main_menu.insert(
+        "4",
+        ui::MenuItem {
+            label: "Exit",
+            action: ui::MenuAction::Exit,
+        },
+    );
+
+    ui::print_menu(&main_menu);
 }
 
+fn execute_opener() {
+    opener::opener();
+}
 
+fn execute_todolist() {
+    todolist::todolist();
+}
 
+fn execute_repos() {
+    repos::repos();
+}
