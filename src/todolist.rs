@@ -1,14 +1,13 @@
-use std::io::{self, Write, BufReader, BufRead};
-use std::fs::{File, OpenOptions};
 use std::fmt;
+use std::fs::{File, OpenOptions};
+use std::io::{self, BufRead, BufReader, Write};
 
 use crate::ui::print_header;
 
 use dialoguer::Select;
 
+use serde::{Deserialize, Serialize};
 use serde_json;
-use serde::{Serialize, Deserialize};
-
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Task {
@@ -19,16 +18,22 @@ pub struct Task {
 
 impl fmt::Display for Task {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}\t[{}] {}", self.id, if self.completed { "X" } else { " " }, self.description)
+        write!(
+            f,
+            "{}\t[{}] {}",
+            self.id,
+            if self.completed { "X" } else { " " },
+            self.description
+        )
     }
 }
 
 impl Task {
     pub fn new(id: usize, description: String) -> Task {
-        Task { 
+        Task {
             id,
-            description, 
-            completed: false, 
+            description,
+            completed: false,
         }
     }
 }
@@ -48,7 +53,6 @@ fn read_tasks_from_file() -> Vec<Task> {
         }
     }
 
-
     tasks
 }
 
@@ -66,13 +70,14 @@ fn write_tasks_to_file(tasks: &Vec<Task>) {
     }
 }
 
-
 fn add_task(tasks: &mut Vec<Task>) {
     println!("Enter the task: ");
     io::stdout().flush().expect("Failed to flush stdout");
 
     let mut description = String::new();
-    io::stdin().read_line(&mut description).expect("Failed to read line");
+    io::stdin()
+        .read_line(&mut description)
+        .expect("Failed to read line");
 
     let id = tasks.len() + 1;
     let new_task = Task::new(id, description.trim().to_string());
@@ -84,7 +89,11 @@ fn add_task(tasks: &mut Vec<Task>) {
 fn list_tasks(tasks: &Vec<Task>) {
     println!("To-do list:");
     for task in tasks {
-        let status = if task.completed { "Completed" } else { "Pending" };
+        let status = if task.completed {
+            "Completed"
+        } else {
+            "Pending"
+        };
         println!("{}. [{}] {}", task.id, status, task.description);
     }
 }
@@ -110,7 +119,8 @@ fn update_task_in_file(task: &Task) {
         if let Ok(mut existing_task) = serde_json::from_str::<Task>(&line) {
             if existing_task.id == task.id {
                 existing_task.completed = task.completed;
-                let serialized_task = serde_json::to_string(&existing_task).expect("Failed to serialize task");
+                let serialized_task =
+                    serde_json::to_string(&existing_task).expect("Failed to serialize task");
                 writeln!(file, "{}", serialized_task).expect("Failed to write to file");
             } else {
                 writeln!(file, "{}", line).expect("Failed to write to file");
@@ -119,7 +129,6 @@ fn update_task_in_file(task: &Task) {
     }
 }
 
-
 fn complete_task(tasks: &mut Vec<Task>) {
     list_tasks(&tasks);
 
@@ -127,7 +136,9 @@ fn complete_task(tasks: &mut Vec<Task>) {
     io::stdout().flush().expect("Failed to flush stdout");
 
     let mut input = String::new();
-    io::stdin().read_line(&mut input).expect("Failed to read line");
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
 
     if let Ok(id) = input.trim().parse::<usize>() {
         if let Some(task) = tasks.iter_mut().find(|t| t.id == id) {
@@ -142,17 +153,13 @@ fn complete_task(tasks: &mut Vec<Task>) {
     }
 }
 
-
-
-
 pub fn todolist() {
-   
     let mut tasks = read_tasks_from_file();
 
     let title = "---- Task Manager ----";
     let phrase = "Welcome to the Task Manager\nWhat do you want?";
 
-    print_header(&title, &phrase); 
+    print_header(&title, &phrase);
 
     let menu = Select::new()
         .item("Open List")
@@ -163,28 +170,24 @@ pub fn todolist() {
         .interact()
         .unwrap();
 
-
     match menu {
-        
         0 => {
             println!("Opening list...");
             list_tasks(&tasks);
-        },
+        }
 
         1 => {
             add_task(&mut tasks);
-        },
+        }
 
         2 => {
             complete_task(&mut tasks);
-       },
+        }
         3 => {
             println!("Leaving...");
 
             std::process::exit(0);
-        },
+        }
         _ => println!("Invalid Choice"),
-    
     }
-
 }

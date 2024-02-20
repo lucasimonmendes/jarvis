@@ -1,5 +1,8 @@
-use crate::ui::print_header;
-use dialoguer::{Input, Select};
+use crate::ui::{print_header, print_menu};
+use crate::ui::{Menu, MenuAction, MenuItem};
+use std::collections::BTreeMap;
+
+use dialoguer::Input;
 use std::process::Command;
 
 fn open_chrome(site: &str) {
@@ -24,53 +27,66 @@ pub fn opener() {
 
     print_header(&title, &phrase);
 
-    let menu = Select::new()
-        .item("Open Chrome + Project")
-        .item("Open Project")
-        .item("Open Chrome")
-        .item("Exit")
-        .default(0)
+    let mut main_menu: Menu = BTreeMap::new();
+    main_menu.insert(
+        "1",
+        MenuItem {
+            label: "Open Chrome + Project",
+            action: MenuAction::Execute(execute_project_and_chrome),
+        },
+    );
+    main_menu.insert(
+        "2",
+        MenuItem {
+            label: "Open Project",
+            action: MenuAction::Execute(execute_project),
+        },
+    );
+    main_menu.insert(
+        "3",
+        MenuItem {
+            label: "Open Chrome",
+            action: MenuAction::Execute(execute_chrome),
+        },
+    );
+    main_menu.insert(
+        "4",
+        MenuItem {
+            label: "Exit",
+            action: MenuAction::Exit,
+        },
+    );
+    // Exibição do menu principal
+    print_menu(&main_menu);
+}
+
+fn execute_project() {
+    let project: String = Input::new()
+        .with_prompt("Enter the project path to open in the terminal")
         .interact()
         .unwrap();
 
-    match menu {
-        0 => {
-            let site: String = Input::new()
-                .with_prompt("Enter the website to open in Chrome")
-                .interact()
-                .unwrap();
+    open_project(&project);
+}
+fn execute_chrome() {
+    let site: String = Input::new()
+        .with_prompt("Enter the website to open in Chrome")
+        .interact()
+        .unwrap();
 
-            let project: String = Input::new()
-                .with_prompt("Enter the project path to open in the terminal")
-                .interact()
-                .unwrap();
+    open_chrome(&site);
+}
+fn execute_project_and_chrome() {
+    let site: String = Input::new()
+        .with_prompt("Enter the website to open in Chrome")
+        .interact()
+        .unwrap();
 
-            open_chrome(&site);
-            open_project(&project);
-        }
+    let project: String = Input::new()
+        .with_prompt("Enter the project path to open in the terminal")
+        .interact()
+        .unwrap();
 
-        1 => {
-            let project: String = Input::new()
-                .with_prompt("Enter the project path to open in the terminal")
-                .interact()
-                .unwrap();
-
-            open_project(&project);
-        }
-
-        2 => {
-            let site: String = Input::new()
-                .with_prompt("Enter the website to open in Chrome")
-                .interact()
-                .unwrap();
-
-            open_chrome(&site);
-        }
-        3 => {
-            println!("Leaving...");
-
-            std::process::exit(0);
-        }
-        _ => println!("Invalid choice"),
-    }
+    open_chrome(&site);
+    open_project(&project);
 }
