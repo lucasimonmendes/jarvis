@@ -1,17 +1,24 @@
 # Jarvis
+
+![Linguagem mais utilizada](https://img.shields.io/github/languages/top/:lucasimonmendes/:jarvis)
+![Último commit](https://img.shields.io/github/last-commit/:lucasimonmendes/:jarvis)
+![README bem legal](https://img.shields.io/badge/readme-bem_legal-8A2BE2)
+
 ```
-   _                  _     
-  (_) __ _ _ ____   _(_)___ 
+   _                  _
+  (_) __ _ _ ____   _(_)___
   | |/ _` | '__\ \ / / / __|
   | | (_| | |   \ V /| \__ \
  _/ |\__,_|_|    \_/ |_|___/
 |__/
 ```
+
 ## Descrição
 
 Jarvis é uma CLI (Interface de Linha de Comando) implementada em Rust, inspirada no assistente virtual fictício do filme Homem de Ferro. Esta aplicação oferece funcionalidades para interação por linha de comando, incluindo recursos de automação, utilidades e informações relevantes.
 
 ## Funcionalidades Principais
+
 - **Automatização de Tarefas**: Execute tarefas repetitivas ou específicas do sistema de forma automatizada (abrir chrome e projetos em terminais novos).
 - **Informações Relevantes(A IMPLEMENTAR)**: Oferece informações úteis sobre o sistema, dados meteorológicos, notícias, etc.
 - **Todolist**: Lista e adiciona novas tarefas.
@@ -26,6 +33,7 @@ git clone https://github.com/lucasimonmendes/jarvis.git
 cd jarvis
 cargo build --release
 ```
+
 ## Uso
 
 Após a instalação, execute a CLI utilizando:
@@ -40,11 +48,9 @@ Para visualizar os comandos disponíveis e a ajuda(ainda a IMPLEMENTAR):
 ./target/release/jarvis --help
 ```
 
-
-
 ## Autor
-Lucas Simon
 
+Lucas Simon
 
 ## Contribuição
 
