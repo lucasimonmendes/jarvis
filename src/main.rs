@@ -13,7 +13,7 @@ fn main() {
     let title = "---- Home -----";
     let phrase = "Hi, I'm Jarvis, your personal assistant, what do you want?";
 
-    ui::print_header(&title, &phrase);
+    ui::print_header(title, phrase);
 
     let mut main_menu: ui::Menu = BTreeMap::new();
     main_menu.insert(
