@@ -156,10 +156,10 @@ fn complete_task(tasks: &mut Vec<Task>) {
 pub fn todolist() {
     let mut tasks = read_tasks_from_file();
 
-    let title = "---- Task Manager ----";
+    let title = "Task Manager";
     let phrase = "Welcome to the Task Manager\nWhat do you want?";
 
-    print_header(&title, &phrase);
+    print_header(title, phrase);
 
     let menu = Select::new()
         .item("Open List")

@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-const WELCOME_TEXT: &str = include_str!("../assets/welcome");
+//const WELCOME_TEXT: &str = include_str!("../assets/welcome");
 
 mod opener;
 mod repos;
@@ -8,9 +8,9 @@ mod todolist;
 mod ui;
 
 fn main() {
-    println!("{}", WELCOME_TEXT);
+    //   println!("{}", WELCOME_TEXT);
 
-    let title = "---- Home -----";
+    let title = "Jarvis";
     let phrase = "Hi, I'm Jarvis, your personal assistant, what do you want?";
 
     ui::print_header(title, phrase);

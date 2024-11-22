@@ -23,10 +23,10 @@ fn download_repo(repo: &str) {
 }
 
 pub fn repos() {
-    let title = "----- Repos Downloader -----";
+    let title = "Repos Downloader";
     let phrase = "Welcome to Repos Downloader, what do you want to download?";
 
-    print_header(&title, &phrase);
+    print_header(title, phrase);
 
     let mut main_menu: Menu = BTreeMap::new();
     main_menu.insert(

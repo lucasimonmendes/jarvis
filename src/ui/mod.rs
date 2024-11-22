@@ -1,5 +1,5 @@
+use figlet_rs::FIGfont;
 use std::collections::BTreeMap;
-
 use std::io::Write;
 
 use crossterm::{
@@ -22,12 +22,16 @@ pub enum MenuAction {
 }
 
 pub fn print_header(title: &str, phrase: &str) {
+    let standard_font = FIGfont::standard().unwrap();
+    let figureTitle = standard_font.convert(title);
+    assert!(figureTitle.is_some());
+
     // Initialize the Terminal with Crossterm
     let mut stdout = std::io::stdout();
     execute!(
         stdout,
         SetForegroundColor(Color::Yellow),
-        Print(title),
+        Print(figureTitle.unwrap()),
         Print("\n"),
         ResetColor
     )

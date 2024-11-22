@@ -22,10 +22,10 @@ fn open_project(project: &String) {
 }
 
 pub fn opener() {
-    let title = "---- Workspace Starter ----";
+    let title = "Workspace Starter";
     let phrase = "Welcome to your workspace!\nWhat task do you want me to perform?";
 
-    print_header(&title, &phrase);
+    print_header(title, phrase);
 
     let mut main_menu: Menu = BTreeMap::new();
     main_menu.insert(
