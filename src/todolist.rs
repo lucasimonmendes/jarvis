@@ -7,7 +7,6 @@ use crate::ui::print_header;
 use dialoguer::Select;
 
 use serde::{Deserialize, Serialize};
-use serde_json;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Task {
@@ -130,7 +129,7 @@ fn update_task_in_file(task: &Task) {
 }
 
 fn complete_task(tasks: &mut Vec<Task>) {
-    list_tasks(&tasks);
+    list_tasks(tasks);
 
     println!("Enter the task ID to mark as complete: ");
     io::stdout().flush().expect("Failed to flush stdout");
@@ -143,7 +142,7 @@ fn complete_task(tasks: &mut Vec<Task>) {
     if let Ok(id) = input.trim().parse::<usize>() {
         if let Some(task) = tasks.iter_mut().find(|t| t.id == id) {
             task.completed = true;
-            update_task_in_file(&task);
+            update_task_in_file(task);
             println!("Task marked as completed!");
         } else {
             println!("Task not found0.");

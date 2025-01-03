@@ -23,15 +23,15 @@ pub enum MenuAction {
 
 pub fn print_header(title: &str, phrase: &str) {
     let standard_font = FIGfont::standard().unwrap();
-    let figureTitle = standard_font.convert(title);
-    assert!(figureTitle.is_some());
+    let figure_title = standard_font.convert(title);
+    assert!(figure_title.is_some());
 
     // Initialize the Terminal with Crossterm
     let mut stdout = std::io::stdout();
     execute!(
         stdout,
         SetForegroundColor(Color::Yellow),
-        Print(figureTitle.unwrap()),
+        Print(figure_title.unwrap()),
         Print("\n"),
         ResetColor
     )
@@ -55,7 +55,7 @@ pub fn print_menu(menu: &Menu) {
     if let Some(item) = menu.get(input.trim()) {
         match &item.action {
             MenuAction::Execute(func) => func(),
-            MenuAction::Submenu(submenu) => print_menu(&submenu),
+            MenuAction::Submenu(submenu) => print_menu(submenu),
             MenuAction::Exit => println!("Leaving"),
         }
     } else {

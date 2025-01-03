@@ -16,7 +16,7 @@ fn open_chrome(site: &str) {
 
 fn open_project(project: &String) {
     Command::new("gnome-terminal")
-        .args(&["--window", &format!("--working-directory={}", &project)])
+        .args(["--window", &format!("--working-directory={}", &project)])
         .output()
         .expect("Failed to open the project");
 }
