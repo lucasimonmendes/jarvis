@@ -20,9 +20,14 @@ Jarvis é uma CLI (Interface de Linha de Comando) implementada em Rust, inspirad
 ## Funcionalidades Principais
 
 - **Automatização de Tarefas**: Execute tarefas repetitivas ou específicas do sistema de forma automatizada (abrir chrome e projetos em terminais novos).
+  ![feature open](./docs/media/003_jarvis_open_chrome_and_project.gif)
+
 - **Informações Relevantes(A IMPLEMENTAR)**: Oferece informações úteis sobre o sistema, dados meteorológicos, notícias, etc.
 - **Todolist**: Lista e adiciona novas tarefas.
-- **Download de projetos**: Download de projetos e inicializadores de ambientes de projetos.
+  ![feature tasks](./docs/media/001_tasks_jarvis.gif)
+
+- **Download de projetos**: Download de projetos.
+  ![feature repos](./docs/media/002_repos_jarvis_gif)
 
 ## Instalação
 
