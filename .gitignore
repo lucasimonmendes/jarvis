@@ -20,3 +20,6 @@ Thumbs.db
 *.log
 *.swp
 *.tmp
+
+
+./tasks.txt
