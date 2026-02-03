@@ -1,8 +1,6 @@
 # Jarvis
 
 ![Linguagem mais utilizada](https://img.shields.io/github/languages/top/lucasimonmendes/jarvis)
-![Último commit](https://img.shields.io/github/last-commit/lucasimonmendes/jarvis)
-![README bem legal](https://img.shields.io/badge/readme-bem_legal-8A2BE2)
 
 ```
    _                  _
